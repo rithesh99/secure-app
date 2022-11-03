@@ -1,14 +1,45 @@
-.mainSection {
+* {
+    margin: 0;
+}
+.home-page {
+	width: 100vw;
+	height: 95vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-evenly;
+    background-color: #c1c1c1
+}
+
+.home-page-icon {
+	width: 70%;
+	padding: 20px;
+}
+
+.home-page-text {
+	font-family: "Lucida Console", "Courier New", monospace;
+	font-weight: bold;
+	font-size: 35px;
+	text-align: center;
+}
+
+.home-page-text-2 {
+	text-align: center;
+	font-weight: bold;
+	font-family: "Courier New";
+	font-size: 18px;
+}
+.home-page-btn-section {
 	display: flex;
 	align-items: center;
-    justify-content: space-around;
-    padding: 25px;
+	justify-content: space-around;
 }
-.mainSection-btn{
-    background: #c144c9;
-    padding: 10px 20px;
-    text-decoration: none;
-    color: black;
-    font-weight: bold;
-
+.home-page-btn {
+    background: #3208bf;
+	padding: 10px 20px;
+	text-decoration: none;
+	color: white;
+    font-family: 'Courier New', Courier, monospace;
+	font-weight: bold;
+    margin-left: 10px;
 }
