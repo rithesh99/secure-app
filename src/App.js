@@ -8,6 +8,7 @@ import HomePage from "./pages/HomePage";
 import VideoTaker from "./pages/VideoRecorder";
 import "./App.css";
 import ImageTaker from "./pages/ImageTaker";
+import Admin from "./pages/Admin";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/video" element={<VideoTaker />} />
         <Route path="/image" element={<ImageTaker />} />
+        <Route path="/admin" element={<Admin />} />
       </Routes>
     </Router>
   );
