@@ -1,6 +1,6 @@
 import React from 'react'
 import VideoRecorder from 'react-video-recorder';
-import fileDownload from 'js-file-download';
+// import fileDownload from 'js-file-download';
 
 const VideoRecorderComponent = () => {
 

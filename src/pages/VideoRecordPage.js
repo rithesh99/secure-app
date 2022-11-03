@@ -1,13 +1,13 @@
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
 import VideoRecorderComponent from '../components/VideoRecorder';
 import Webcam from "react-webcam";
 
-const VideoRecordPage = (props) => {
+const VideoRecordPage = () => {
     const webcamRef = React.useRef(null);
     const [src, setSrc] = useState('')
     const capture = React.useCallback(
         () => {
-            const imageSrc = webcamRef.current.getScreenshot();
+            // const imageSrc = webcamRef.current.getScreenshot();
             setSrc(webcamRef.current.getScreenshot())
         },
         [webcamRef]
@@ -16,7 +16,7 @@ const VideoRecordPage = (props) => {
         <div>
             <div style={{ width: "100%", height: "100%" }}>
                 <VideoRecorderComponent />
-                {/* <div>
+                <div>
                     <Webcam audio={false}
                         width="100%"
                         height="100%"
@@ -29,8 +29,8 @@ const VideoRecordPage = (props) => {
                         }}
                     />
                     <button onClick={capture}>Capture photo</button>
-                    <img src={src}/>
-                </div> */}
+                    <img src={src} alt="pic"/>
+                </div>
             </div>
         </div >
     );
