@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "firebase": "^9.13.0",
     "js-file-download": "^0.4.12",
     "prop-types": "15.7.2",
     "react": "^16.14.0",

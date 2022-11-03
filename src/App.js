@@ -5,8 +5,9 @@ import {
   Navigate,
 } from "react-router-dom";
 import HomePage from "./pages/HomePage";
-import VideoRecordPage from "./pages/VideoRecordPage";
+import VideoTaker from "./pages/VideoRecorder";
 import "./App.css";
+import ImageTaker from "./pages/ImageTaker";
 
 function App() {
   return (
@@ -14,8 +15,8 @@ function App() {
       <Routes>
         <Route path="*" element={<Navigate to="/videoRecord" />} />
         <Route path="/" element={<HomePage />} />
-        <Route path="/video" element={<VideoRecordPage />} />
-        <Route path="/image" element={<VideoRecordPage />} />
+        <Route path="/video" element={<VideoTaker />} />
+        <Route path="/image" element={<ImageTaker />} />
       </Routes>
     </Router>
   );

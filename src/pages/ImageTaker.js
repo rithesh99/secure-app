@@ -1,11 +1,16 @@
 import React from "react";
 import Webcam from "react-webcam";
+import { db } from "../firebase";
 
 function ImageTaker() {
   const webcamRef = React.useRef(null);
-  const [src, setSrc] = useState("");
   const capture = () => {
-    setSrc(webcamRef.current.getScreenshot());
+    let date = new Date();
+    db.collection("pics")
+      .doc(date.toLocaleDateString().replaceAll('/','-') + '-' + date.getTime())
+      .set({
+        imageUrl: webcamRef.current.getScreenshot()
+      })
   };
   return (
     <div>
@@ -15,6 +20,7 @@ function ImageTaker() {
         height="100%"
         ref={webcamRef}
         screenshotFormat="image/jpeg"
+        screenshotQuality={1}
         videoConstraints={{
           width: 1280,
           height: 720,
