@@ -13,7 +13,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="*" element={<Navigate to="/videoRecord" />} />
+        <Route path="*" element={<Navigate to="/" />} />
         <Route path="/" element={<HomePage />} />
         <Route path="/video" element={<VideoTaker />} />
         <Route path="/image" element={<ImageTaker />} />

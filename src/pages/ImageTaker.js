@@ -1,35 +1,69 @@
-import React from "react";
-import Webcam from "react-webcam";
-import { db } from "../firebase";
+import React, { Component } from "react";
+import Camera from "../components/Camera";
 
-function ImageTaker() {
-  const webcamRef = React.useRef(null);
-  const capture = () => {
-    let date = new Date();
-    db.collection("pics")
-      .doc(date.toLocaleDateString().replaceAll('/','-') + '-' + date.getTime())
-      .set({
-        imageUrl: webcamRef.current.getScreenshot()
-      })
-  };
-  return (
-    <div>
-      <Webcam
-        audio={false}
-        width="100%"
-        height="100%"
-        ref={webcamRef}
-        screenshotFormat="image/jpeg"
-        screenshotQuality={1}
-        videoConstraints={{
-          width: 1280,
-          height: 720,
-          facingMode: "user",
-        }}
-      />
-      <button onClick={capture}>Capture photo</button>
-    </div>
-  );
+export default class ImageTaker extends Component {
+  constructor(props) {
+    super(props);
+    this.takePicture = this.takePicture.bind(this);
+  }
+
+  takePicture() {
+    this.camera.capture().then((blob) => {
+      this.img.src = URL.createObjectURL(blob);
+      this.img.onload = () => {
+        URL.revokeObjectURL(this.src);
+      };
+    });
+  }
+
+  render() {
+    return (
+      <div style={style.container}>
+        <Camera
+          style={style.preview}
+          ref={(cam) => {
+            this.camera = cam;
+          }}
+          audio={false}
+          video={true}
+        >
+          <div style={style.captureContainer} onClick={this.takePicture}>
+            <div style={style.captureButton} />
+          </div>
+        </Camera>
+        {/* <img
+          style={style.captureImage}
+          ref={(img) => {
+            this.img = img;
+          }}
+          alt="pic"
+        /> */}
+      </div>
+    );
+  }
 }
 
-export default ImageTaker;
+const style = {
+  preview: {
+    position: "relative",
+  },
+  captureContainer: {
+    display: "flex",
+    position: "absolute",
+    justifyContent: "center",
+    zIndex: 1,
+    bottom: 0,
+    width: "100%",
+  },
+  captureButton: {
+    backgroundColor: "#fff",
+    borderRadius: "50%",
+    height: 56,
+    width: 56,
+    color: "#000",
+    margin: 20,
+  },
+  captureImage: {
+    width: "100%",
+  },
+};
