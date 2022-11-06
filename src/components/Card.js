@@ -18,6 +18,12 @@ function Card({ url, type }) {
         >
           Download
         </button>
+        <button
+          className="btn btn-danger"
+          onClick=""
+        >
+          DELETE
+        </button>
       </div>
     </div>
   );

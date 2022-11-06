@@ -6,6 +6,7 @@ import { db, storage } from "../firebase";
 
 export default function ImageTaker() {
   const [progress, setProgress] = React.useState(0);
+  // const [blob, setBlob] = React.useState(null);
 
   let camera = React.useRef();
 
@@ -37,6 +38,7 @@ export default function ImageTaker() {
       },
       (error) => {
         // Handle unsuccessful uploads
+        alert(error)
       },
       () => {
         // Handle successful uploads on complete
@@ -54,6 +56,7 @@ export default function ImageTaker() {
     camera.capture().then((blob) => {
       // this.img.src = URL.createObjectURL(blob);
       uploadPic(blob);
+      // setBlob(blob);
     });
   }
 

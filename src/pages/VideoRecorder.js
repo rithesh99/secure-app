@@ -9,7 +9,7 @@ const VideoTaker = () => {
 
   return (
     <div>
-      <Header/>
+      <Header />
       {progress !== 0 ? (
         <ProgressBar bgcolor="red" progress={progress} height="20px" />
       ) : (
@@ -61,8 +61,10 @@ const VideoTaker = () => {
             },
             (error) => {
               // Handle unsuccessful uploads
+              alert(error)
             },
             () => {
+              // alert("error")
               // Handle successful uploads on complete
               uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
                 db.collection("videos").doc(fileName).set({
