@@ -1,5 +1,6 @@
 import React from "react";
 import VideoRecorder from "react-video-recorder";
+import Header from "../components/Header";
 import ProgressBar from "../components/PrgressBar";
 import { db, storage } from "../firebase";
 
@@ -8,6 +9,7 @@ const VideoTaker = () => {
 
   return (
     <div>
+      <Header/>
       {progress !== 0 ? (
         <ProgressBar bgcolor="red" progress={progress} height="20px" />
       ) : (

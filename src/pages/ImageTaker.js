@@ -1,46 +1,91 @@
-import React, { Component } from "react";
+import React from "react";
 import Camera from "../components/Camera";
+import Header from "../components/Header";
+import ProgressBar from "../components/PrgressBar";
+import { db, storage } from "../firebase";
 
-export default class ImageTaker extends Component {
-  constructor(props) {
-    super(props);
-    this.takePicture = this.takePicture.bind(this);
+export default function ImageTaker() {
+  const [progress, setProgress] = React.useState(0);
+
+  let camera = React.useRef();
+
+  async function uploadPic(blob) {
+    let date = new Date();
+
+    let fileName =
+      date.toLocaleDateString().replaceAll("/", "-") + "-" + date.getTime();
+    await storage.ref(fileName);
+    let uploadTask = storage.ref(fileName).put(blob);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        // Observe state change events such as progress, pause, and resume
+        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log("Upload is " + progress + "% done");
+        setProgress(progress);
+        switch (snapshot.state) {
+          case "paused": // or 'paused'
+            console.log("Upload is paused");
+            break;
+          case "running": // or 'running'
+            console.log("Upload is running");
+            break;
+          default:
+            break;
+        }
+      },
+      (error) => {
+        // Handle unsuccessful uploads
+      },
+      () => {
+        // Handle successful uploads on complete
+        uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+          db.collection("pics").doc(fileName).set({
+            imageUrl: downloadURL,
+          });
+          setProgress(0);
+        });
+      }
+    );
   }
 
-  takePicture() {
-    this.camera.capture().then((blob) => {
-      this.img.src = URL.createObjectURL(blob);
-      this.img.onload = () => {
-        URL.revokeObjectURL(this.src);
-      };
+  function takePicture() {
+    camera.capture().then((blob) => {
+      // this.img.src = URL.createObjectURL(blob);
+      uploadPic(blob);
     });
   }
 
-  render() {
-    return (
-      <div style={style.container}>
-        <Camera
-          style={style.preview}
-          ref={(cam) => {
-            this.camera = cam;
-          }}
-          audio={false}
-          video={true}
-        >
-          <div style={style.captureContainer} onClick={this.takePicture}>
-            <div style={style.captureButton} />
-          </div>
-        </Camera>
-        {/* <img
+  return (
+    <div style={style.container}>
+      <Header/>
+      {progress !== 0 ? (
+        <ProgressBar bgcolor="red" progress={progress} height="20px" />
+      ) : (
+        ""
+      )}
+      <Camera
+        style={style.preview}
+        ref={(cam) => {
+          camera = cam;
+        }}
+        audio={false}
+        video={true}
+      >
+        <div style={style.captureContainer} onClick={takePicture}>
+          <div style={style.captureButton} />
+        </div>
+      </Camera>
+      {/* <img
           style={style.captureImage}
           ref={(img) => {
             this.img = img;
           }}
           alt="pic"
         /> */}
-      </div>
-    );
-  }
+    </div>
+  );
 }
 
 const style = {

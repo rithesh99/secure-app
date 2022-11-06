@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 class Camera extends Component {
-
   componentWillMount() {
     const { video, audio } = this.props;
     if (navigator.mediaDevices) {
-      navigator.mediaDevices.getUserMedia({ video, audio })
-      .then((mediaStream) => {
-        this.setState({ mediaStream });
-        this.video.srcObject = mediaStream;
-        this.video.play();
-      })
-      .catch(error => error);
+      navigator.mediaDevices
+        .getUserMedia({ video, audio })
+        .then((mediaStream) => {
+          this.setState({ mediaStream });
+          this.video.srcObject = mediaStream;
+          this.video.play();
+        })
+        .catch((error) => error);
     }
   }
 
@@ -25,8 +25,13 @@ class Camera extends Component {
   render() {
     return (
       <div style={this.props.style}>
-        { this.props.children }
-        <video style={styles.base} ref={(video) => { this.video = video; }} />
+        {this.props.children}
+        <video
+          style={styles.base}
+          ref={(video) => {
+            this.video = video;
+          }}
+        />
       </div>
     );
   }
@@ -36,7 +41,7 @@ export default Camera;
 
 const styles = {
   base: {
-    width: '100%',
-    height: '100%'
-  }
+    width: "100%",
+    height: "100%",
+  },
 };
